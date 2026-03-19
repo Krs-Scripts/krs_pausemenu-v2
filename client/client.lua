@@ -41,6 +41,13 @@ local function updatePauseMenu()
     end
 end
 
+local function canOpenPause()
+    if IsPauseMenuActive() or IsNuiFocused() or pauseMenuActive then
+        return false
+    end
+    return true
+end
+
 CreateThread(updatePauseMenu)
 
 lib.addKeybind({
@@ -48,7 +55,7 @@ lib.addKeybind({
     description = 'Toggle Pause Menu',
     defaultKey = 'ESCAPE',
     onPressed = function()
-        if not pauseMenuActive then
+        if canOpenPause() then
             openPauseMenu()
         end
     end
